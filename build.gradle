@@ -1,0 +1,40 @@
+buildscript {
+	ext {
+		springBootVersion = '1.5.1.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+	}
+	dependencies {
+		classpath  "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+		      
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+
+jar {
+	baseName = 'momoForLINE'
+	version = '0.0.1-SNAPSHOT'
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile("org.springframework.boot:spring-boot-starter-log4j2")
+	compile group: 'org.jsoup', name: 'jsoup', version: '1.10.2'
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+configurations {
+  all*.exclude group:'org.springframework.boot',
+               module:'spring-boot-starter-logging'
+}
