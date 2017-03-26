@@ -67,6 +67,20 @@ public class MomoServices {
 		}
 	}
 	
+	public void replyToLINE(JSONObject requestBody){
+		JSONArray jsonArray = requestBody.optJSONArray("events");
+		JSONObject jsonObject = new JSONObject();
+		String replyToken;
+		String keyword;
+		for(int i=0, size=jsonArray.length(); i<size; i++){
+			jsonObject = jsonArray.optJSONObject(i);
+		    replyToken = jsonObject.optString("replyToken");
+		    keyword = extractKeyWord(jsonObject.optJSONObject("message").optString("text"));
+		    if("".equals(keyword))break;
+		    replyToLINE(replyToken, momoSearch(keyword));
+		}
+	}
+	
 	private void replyToLINE(String replyToken, String message){
 		JSONObject postData = new JSONObject();
 		JSONObject messageObj = new JSONObject();
@@ -84,5 +98,12 @@ public class MomoServices {
 		porperties.put("Content-Type", "application/json");
 		porperties.put("Authorization", "Bearer " + token);
 		return porperties;
+	}
+	
+	private String extractKeyWord(String text){
+		if(text.matches("搜搜,\\w*")){
+			return text.replaceAll("搜搜,()", "$1");
+		}
+		return "";
 	}
 }
