@@ -67,7 +67,7 @@ public class MomoServices {
 		}
 	}
 	
-	private void replyToLINE(String replyToken, String message) throws JSONException{
+	private void replyToLINE(String replyToken, String message){
 		JSONObject postData = new JSONObject();
 		JSONObject messageObj = new JSONObject();
 		JSONArray jsonArray = new JSONArray();

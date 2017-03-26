@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.momoForLINE.services.MomoServices;
-import com.momoForLINE.utils.WebUtils;
 
 @Controller
 public class MomoConroller {
@@ -29,7 +28,7 @@ public class MomoConroller {
 			result = momoservices.momoSearch(encodeKeyword);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
-			result = "¦øªA¾¹µo¥Í¿ù»~--UnsupportedEncodingException";
+			result = "ï¿½ï¿½ï¿½Aï¿½ï¿½ï¿½oï¿½Í¿ï¿½ï¿½~--UnsupportedEncodingException";
 		}
 		return result;
 	}
