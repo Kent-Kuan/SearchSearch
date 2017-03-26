@@ -40,6 +40,7 @@ public class MomoConroller {
 	@ResponseBody
 	public void momoSearchPost(@RequestBody String reqbody){
 		JSONObject requestBody = new JSONObject(reqbody);
+		System.out.println("測試"+reqbody.toString());
 		momoservices.replyToLINE(requestBody);
 	}
 }
