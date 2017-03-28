@@ -101,7 +101,7 @@ public class MomoServices {
 	}
 	
 	private String extractKeyWord(String text){
-		if(text.matches("搜搜,\\w*")){
+		if(text.matches("搜搜,.*")){
 			return text.replaceAll("搜搜,()", "$1");
 		}
 		return "";
