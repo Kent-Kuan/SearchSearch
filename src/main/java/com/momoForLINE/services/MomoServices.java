@@ -38,7 +38,10 @@ public class MomoServices {
 		Document doc = Jsoup.parse(response);
 		Elements elements = new Elements(doc).select("article.prdListArea li");
 		JSONArray jsonArray = combinationProduct(elements);
-		return jsonArray.toString();
+		JSONObject templateObj = new JSONObject();
+		templateObj.put("type", "carousel");
+		templateObj.put("columns", jsonArray);
+		return templateObj.toString();
 	}
 	
 	private String getResponse(String url){
@@ -46,19 +49,27 @@ public class MomoServices {
 	}
 	
 	private JSONArray combinationProduct(Elements elements){
-		JSONArray jsonArray = new JSONArray();
+		JSONArray columnsArray = new JSONArray();
 		try {
 		  for(int i=0; i<count; i++){
-			JSONObject jsonObject = new JSONObject();
-			jsonObject.put("prdName", getElementAttr(elements.get(i), ".prdName", "text"));
-			jsonObject.put("img", getElementAttr(elements.get(i), "img[src*=/goodsimg/]", "src"));
-			jsonArray.put(jsonObject);
+			JSONObject columnObject = new JSONObject();
+			columnObject.put("title", getElementAttr(elements.get(i), ".prdName", "text"));
+			columnObject.put("thumbnailImageUrl", getElementAttr(elements.get(i), "img[src*=/goodsimg/]", "src"));
+			columnObject.put("text", "Descripion!");
+			JSONObject actionObject = new JSONObject();
+			actionObject.put("type", "uri");
+			actionObject.put("label", "Open!");
+			actionObject.put("uri", "https:m.momoshop.com.tw"+getElementAttr(elements.get(i), "a[href*=/goods.momo]", "href"));
+			JSONArray actionsArray = new JSONArray();
+			actionsArray.put(actionObject);
+			columnObject.put("actions", actionsArray);
+			columnsArray.put(columnObject);
 		  } 
 		}catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return jsonArray;
+		return columnsArray;
 	}
 	
 	private String getElementAttr(Element element, String query, String attr){
@@ -87,11 +98,14 @@ public class MomoServices {
 		JSONObject postData = new JSONObject();
 		JSONObject messageObj = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-		messageObj.put("type", "text");
-		messageObj.put("text", message);
-		jsonArray.put(messageObj);
-		postData.put("replyToken", replyToken);
-		postData.put("messages", jsonArray);
+//		messageObj.put("type", "text");
+//		messageObj.put("text", message);
+//		jsonArray.put(messageObj);
+//		postData.put("replyToken", replyToken);
+//		postData.put("messages", jsonArray);
+		messageObj.put("type", "template");
+		messageObj.put("altText", "Hello World!");
+		messageObj.put("template", message);
 		WebUtils.postUrl("https://api.line.me/v2/bot/message/reply", postData, getLINEproperties());
 	}
 	
