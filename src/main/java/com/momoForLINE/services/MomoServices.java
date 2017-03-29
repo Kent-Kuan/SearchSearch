@@ -97,7 +97,7 @@ public class MomoServices {
 	private void replyToLINE(String replyToken, String message){
 		JSONObject postData = new JSONObject();
 		JSONObject messageObj = new JSONObject();
-		JSONArray jsonArray = new JSONArray();
+//		JSONArray jsonArray = new JSONArray();
 //		messageObj.put("type", "text");
 //		messageObj.put("text", message);
 //		jsonArray.put(messageObj);
@@ -106,6 +106,8 @@ public class MomoServices {
 		messageObj.put("type", "template");
 		messageObj.put("altText", "Hello World!");
 		messageObj.put("template", message);
+		postData.put("replyToken", replyToken);
+		postData.put("messages", messageObj);
 		WebUtils.postUrl("https://api.line.me/v2/bot/message/reply", postData, getLINEproperties());
 	}
 	
