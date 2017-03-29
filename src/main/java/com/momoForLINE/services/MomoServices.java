@@ -97,7 +97,7 @@ public class MomoServices {
 	private void replyToLINE(String replyToken, String message){
 		JSONObject postData = new JSONObject();
 		JSONObject messageObj = new JSONObject();
-//		JSONArray jsonArray = new JSONArray();
+		JSONArray jsonArray = new JSONArray();
 //		messageObj.put("type", "text");
 //		messageObj.put("text", message);
 //		jsonArray.put(messageObj);
@@ -106,8 +106,11 @@ public class MomoServices {
 		messageObj.put("type", "template");
 		messageObj.put("altText", "Hello World!");
 		messageObj.put("template", message);
+		jsonArray.put(messageObj);
 		postData.put("replyToken", replyToken);
-		postData.put("messages", messageObj);
+		postData.put("messages", jsonArray);
+//		System.out.println(postData.toString());
+		//:{"template":"{"columns":[{"thumbnailImageUrl":"https://img4.momoshop.com.tw/goodsimg/0004/207/860/4207860_L.jpg?t=1484820436","text":"Descripion!","title":"【快速到貨】健身大師全新升級22顆溫熱按摩頭大型按摩椅墊","actions":[{"label":"Open!","type":"uri","uri":"https:m.momoshop.com.tw/goods.momo?i_code=4207860&mdiv=searchEngine&oid=1_1&kw=\\\\u6309\\\\u6469\\\\u6905"}]}],"type":"carousel"}","altText":"Hello World!","type":"template"}}
 		WebUtils.postUrl("https://api.line.me/v2/bot/message/reply", postData, getLINEproperties());
 	}
 	
