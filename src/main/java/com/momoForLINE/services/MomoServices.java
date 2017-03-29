@@ -27,10 +27,12 @@ public class MomoServices {
 		this.searchURL = serachURL+"=";
 	}
 	
-	public void setToken(String token){
+	
+	public void setToken(String token) {
 		this.token = token;
 	}
-	
+
+
 	public String momoSearch(String keyword){
 		String response = getResponse(searchURL+keyword);
 		Document doc = Jsoup.parse(response);
