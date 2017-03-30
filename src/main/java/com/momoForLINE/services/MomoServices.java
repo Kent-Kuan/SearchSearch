@@ -21,7 +21,7 @@ public class MomoServices {
 	
 	private String searchURL;
 	private String token;
-	private final int count = 3;
+	private final int count = 1;
 	
 	public void setSearchURL(String serachURL){
 		this.searchURL = serachURL+"=";
@@ -59,7 +59,8 @@ public class MomoServices {
 			JSONObject actionObject = new JSONObject();
 			actionObject.put("type", "uri");
 			actionObject.put("label", "Open!");
-			actionObject.put("uri", "https:m.momoshop.com.tw"+getElementAttr(elements.get(i), "a[href*=/goods.momo]", "href"));
+			String uri = getElementAttr(elements.get(i), "a[href*=/goods.momo]", "href").replaceAll("(.*)&.*", "$1");
+			actionObject.put("uri", "https://m.momoshop.com.tw"+uri);
 			JSONArray actionsArray = new JSONArray();
 			actionsArray.put(actionObject);
 			columnObject.put("actions", actionsArray);
@@ -98,19 +99,12 @@ public class MomoServices {
 		JSONObject postData = new JSONObject();
 		JSONObject messageObj = new JSONObject();
 		JSONArray jsonArray = new JSONArray();
-//		messageObj.put("type", "text");
-//		messageObj.put("text", message);
-//		jsonArray.put(messageObj);
-//		postData.put("replyToken", replyToken);
-//		postData.put("messages", jsonArray);
 		messageObj.put("type", "template");
 		messageObj.put("altText", "Hello World!");
-		messageObj.put("template", message);
+		messageObj.put("template", new JSONObject(message));
 		jsonArray.put(messageObj);
 		postData.put("replyToken", replyToken);
 		postData.put("messages", jsonArray);
-//		System.out.println(postData.toString());
-		//:{"template":"{"columns":[{"thumbnailImageUrl":"https://img4.momoshop.com.tw/goodsimg/0004/207/860/4207860_L.jpg?t=1484820436","text":"Descripion!","title":"【快速到貨】健身大師全新升級22顆溫熱按摩頭大型按摩椅墊","actions":[{"label":"Open!","type":"uri","uri":"https:m.momoshop.com.tw/goods.momo?i_code=4207860&mdiv=searchEngine&oid=1_1&kw=\\\\u6309\\\\u6469\\\\u6905"}]}],"type":"carousel"}","altText":"Hello World!","type":"template"}}
 		WebUtils.postUrl("https://api.line.me/v2/bot/message/reply", postData, getLINEproperties());
 	}
 	
