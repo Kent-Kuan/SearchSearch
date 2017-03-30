@@ -64,6 +64,7 @@ public class WebUtils {
 		  HttpURLConnection urlConnection = getConnect(urlString, "POST", porperties);
 		  StringBuffer sb = new StringBuffer();
 		  String line ;
+		  System.out.println("POST data:"+data.toString());
 		  try {
 			OutputStream out = urlConnection.getOutputStream();
 			BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(out));
