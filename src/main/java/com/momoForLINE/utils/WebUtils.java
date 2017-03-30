@@ -74,7 +74,16 @@ public class WebUtils {
 				sb.append(line);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			try{
+				BufferedReader rd = new BufferedReader(new InputStreamReader(urlConnection.getErrorStream(), "utf-8"));
+				while((line=rd.readLine())!=null){
+					sb.append(line);
+					System.out.println(sb.toString());
+				}
+			}catch (IOException e2) {
+				e2.printStackTrace();
+			}
+			
 		}
 		  return sb.toString();
 	  }
