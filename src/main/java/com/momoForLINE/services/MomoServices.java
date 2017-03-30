@@ -21,7 +21,7 @@ public class MomoServices {
 	
 	private String searchURL;
 	private String token;
-	private final int count = 6;
+	private final int count = 5;
 	
 	public void setSearchURL(String serachURL){
 		this.searchURL = serachURL+"=";
