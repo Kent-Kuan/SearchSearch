@@ -53,7 +53,8 @@ public class MomoServices {
 		try {
 		  for(int i=0; i<count; i++){
 			JSONObject columnObject = new JSONObject();
-			columnObject.put("title", getElementAttr(elements.get(i), ".prdName", "text"));
+			String title = getElementAttr(elements.get(i), ".prdName", "text").replaceAll("(.{30}).*", "$1");
+			columnObject.put("title", title);
 			columnObject.put("thumbnailImageUrl", getElementAttr(elements.get(i), "img[src*=/goodsimg/]", "src"));
 			columnObject.put("text", "Descripion!");
 			JSONObject actionObject = new JSONObject();
